@@ -1,22 +1,22 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
-//********************************************
-// *********ADMIN PIN: 2077*******************
-//********************************************
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
 
-//This Table View will display 4 contacts by default on a Table View
+//This Table View will display categories by default on a Table View
 class CategoriesTableViewController: UITableViewController,UITextFieldDelegate, UINavigationControllerDelegate {
     
     //This variable holds reference to class with original Employess CoreData array
     var tabBarCopy = BaseTabBarController()
 
-    //set some Table view parameters to improve reading
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -24,6 +24,7 @@ class CategoriesTableViewController: UITableViewController,UITextFieldDelegate, 
         let tabBar = tabBarController as! BaseTabBarController
         self.tabBarCopy = tabBar
 
+        //set some Table view parameters to improve reading
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
     }
@@ -34,27 +35,28 @@ class CategoriesTableViewController: UITableViewController,UITextFieldDelegate, 
         //this reload will display any new contact created by user from CoreData
         self.tabBarCopy.categoriesDB.categoriesCoreDataRetreival()
         
-        //sort array alphabetically
-      //  self.tabBarCopy.employeeList.employeeCoreDataArray.sort {
-        //      $0.lastName! < $1.lastName!
-        //}
-         //load local array from CoreData
-         tableView.reloadData()
+        tableView.reloadData()
     }
     
-    //this branches off to either the Employee Edit View Controller
+    // set process to segue to Category Results Table View Controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-let backItem = UIBarButtonItem()
+        
+        // Set back button
+        let backItem = UIBarButtonItem()
         backItem.title = "Back"
         navigationItem.backBarButtonItem = backItem
+        
         // Figure out which row was just tapped
         if let row = tableView.indexPathForSelectedRow?.row {
-            // Get the item associated with this row and pass it along
+        
+        // Get the item associated with this row and pass it along
         let item = self.tabBarCopy.categoriesDB.categoriesArray[row]
-            //branch to the Detail View
-            let editEmpViewController = segue.destination as! CategoryResultsTableViewController
-            //Pass reference to selected contact
-            editEmpViewController.categoryType = item.categoryType!//pass gallery object
+        
+        //branch to the Detail View
+        let catResViewController = segue.destination as! CategoryResultsTableViewController
+        
+        //Pass reference to selected contact
+        catResViewController.categoryType = item.categoryType!//pass gallery object
         }
     }//end prepare
 

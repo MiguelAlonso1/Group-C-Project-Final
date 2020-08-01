@@ -1,29 +1,32 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
 
-//this view shows the pin and url fields that the user can use to update the original values
+//this view shows the controller for a new category
 class NewCategoryViewController:UIViewController,UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-     var tabBarCopy = BaseTabBarController()
-     var picFlag = false
+    
+    var tabBarCopy = BaseTabBarController()
+    var picFlag = false
+    
+    // set outlets for image and text field
     @IBOutlet weak var catPic: UIImageView!
     @IBOutlet weak var newCatField: UITextField!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let tabBar = tabBarController as! BaseTabBarController
         self.tabBarCopy = tabBar
-//        artPicture.image = UIImage( data: localGallery.img! as Data)
-//        artDescription.text = localGallery.desc
-//        artTitle.text = localGallery.title
     }
-    //this function limits the number of characters in the PIN field to 4
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -48,13 +51,12 @@ class NewCategoryViewController:UIViewController,UITextFieldDelegate, UINavigati
         imagePicker.delegate = self
         
         present(imagePicker, animated: true, completion: nil)
-        
-        
     } // end pressedCamera
     
     //This function will add a new picture to the new contact being created
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
         //copy new picture into new contact
         self.catPic.image = image
         
@@ -104,9 +106,5 @@ class NewCategoryViewController:UIViewController,UITextFieldDelegate, UINavigati
                 view.endEditing(true)
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//
-//    }
-
-} //NewContactViewController Klass. This is the end of this file
+} //NewContactViewController Class. This is the end of this file
 

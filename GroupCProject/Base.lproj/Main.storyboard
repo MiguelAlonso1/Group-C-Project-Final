@@ -139,7 +139,7 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MUP-J5-FBd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1724" y="385.45727136431788"/>
+            <point key="canvasLocation" x="2663.1999999999998" y="385.45727136431788"/>
         </scene>
         <!--CategoryResults-->
         <scene sceneID="fdo-wU-MZf">
@@ -149,10 +149,15 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" id="mpG-uA-hdL">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="15" reuseIdentifier="ResultsTableViewCell" rowHeight="62" id="Ur5-HN-UC7" customClass="ResultsTableViewCell" customModule="GroupCProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="62"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ur5-HN-UC7" id="7cq-wi-Bkf">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="61.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -198,10 +203,13 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="searchBar" destination="mpG-uA-hdL" id="BlG-IJ-dXw"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPB-uA-CB9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1724" y="1115.8920539730136"/>
+            <point key="canvasLocation" x="2663.1999999999998" y="1115.8920539730136"/>
         </scene>
         <!--ArtDetail-->
         <scene sceneID="9K1-kR-FYL">
@@ -326,7 +334,7 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gdf-1G-9ra" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2760.8000000000002" y="1115.8920539730136"/>
+            <point key="canvasLocation" x="3700" y="1115.8920539730136"/>
         </scene>
         <!--CommissionWork-->
         <scene sceneID="dMn-jC-pBb">
@@ -513,7 +521,7 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eZ5-HT-gXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3366" y="386"/>
+            <point key="canvasLocation" x="4304.8000000000002" y="385.45727136431788"/>
         </scene>
         <!--New Result-->
         <scene sceneID="6s5-fw-xZU">
@@ -612,53 +620,78 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                         <segue destination="bYP-lU-sO7" kind="relationship" relationship="viewControllers" id="bBf-UO-LjG"/>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="W4b-c7-iVi" kind="relationship" relationship="viewControllers" id="1HP-oV-zw3"/>
-                        <segue destination="d3Y-y3-iu9" kind="relationship" relationship="viewControllers" id="Mrw-0h-5KG"/>
+                        <segue destination="Ebq-qo-ye6" kind="relationship" relationship="viewControllers" id="We3-0R-91y"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
-        <!--Favorite-->
-        <scene sceneID="PQm-eF-vb7">
+        <!--Favorites-->
+        <scene sceneID="8AF-HY-ohg">
             <objects>
-                <viewController title="Favorite" id="d3Y-y3-iu9" customClass="FavoritesViewController" customModule="GroupCProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="aiY-jt-qaE"/>
-                        <viewControllerLayoutGuide type="bottom" id="UX0-pd-68j"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ryK-jT-rBp">
+                <tableViewController title="Favorites" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ebq-qo-ye6" customClass="FavoritesViewController" customModule="GroupCProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fs4-ba-6kP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4nV-kF-UEn">
-                                <rect key="frame" x="36" y="378" width="303" height="207"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Faves" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5o-44-WdM">
-                                <rect key="frame" x="36" y="40" width="295" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                <color key="textColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="girl-leaves" translatesAutoresizingMaskIntoConstraints="NO" id="ZHZ-gl-7Mq">
-                                <rect key="frame" x="62" y="111" width="250" height="250"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Faves" image="icons8-mark-as-favorite-40" id="ubr-EV-rmx"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="M6m-hm-dZy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="6hb-6I-xvt">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FaveResultsTableViewCell" rowHeight="68" id="0zr-ra-XOd" customClass="FaveResultsTableViewCell" customModule="GroupCProject" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0zr-ra-XOd" id="3C4-ql-KwL">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="67.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-picture-500" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zao-Vx-QNE">
+                                            <rect key="frame" x="16" y="-1" width="75" height="69.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="75" id="p23-UK-sq8"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAX-HR-f9U">
+                                            <rect key="frame" x="130" y="17" width="229" height="35"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="TAX-HR-f9U" firstAttribute="trailing" secondItem="3C4-ql-KwL" secondAttribute="trailingMargin" id="BbA-SO-pok"/>
+                                        <constraint firstItem="Zao-Vx-QNE" firstAttribute="centerY" secondItem="3C4-ql-KwL" secondAttribute="centerY" id="Flh-h1-BAx"/>
+                                        <constraint firstItem="TAX-HR-f9U" firstAttribute="leading" secondItem="Zao-Vx-QNE" secondAttribute="trailing" constant="39" id="TGx-wu-U4H"/>
+                                        <constraint firstItem="Zao-Vx-QNE" firstAttribute="top" secondItem="3C4-ql-KwL" secondAttribute="topMargin" constant="-12" id="Ugd-fD-3H9"/>
+                                        <constraint firstItem="Zao-Vx-QNE" firstAttribute="leading" secondItem="3C4-ql-KwL" secondAttribute="leadingMargin" id="Ywy-zL-kWK"/>
+                                        <constraint firstItem="Zao-Vx-QNE" firstAttribute="centerY" secondItem="TAX-HR-f9U" secondAttribute="centerY" id="fHx-kL-NdR"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="TAX-HR-f9U" secondAttribute="bottom" constant="5" id="iJo-4F-agy"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="faveResultPicture" destination="Zao-Vx-QNE" id="LoQ-ZI-OLX"/>
+                                    <outlet property="faveResultTitle" destination="TAX-HR-f9U" id="z7G-sJ-ERe"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ebq-qo-ye6" id="jpr-aY-4XH"/>
+                            <outlet property="delegate" destination="Ebq-qo-ye6" id="eP5-5M-eLu"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="icons8-mark-as-favorite-40" id="M18-uN-DiC"/>
+                    <connections>
+                        <outlet property="searchBar" destination="6hb-6I-xvt" id="smk-fT-59w"/>
+                        <outlet property="tblview" destination="fs4-ba-6kP" id="D3v-zy-z2X"/>
+                        <segue destination="IDM-Hg-SsA" kind="show" id="nZs-nZ-6Oh"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LZJ-ai-IW3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="719"/>
+            <point key="canvasLocation" x="223.19999999999999" y="722.78860569715152"/>
         </scene>
         <!--Gallery-->
         <scene sceneID="KrE-Ig-qZ2">
@@ -677,7 +710,7 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4QJ-Ky-tj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="784.79999999999995" y="386.35682158920542"/>
+            <point key="canvasLocation" x="1724" y="386.35682158920542"/>
         </scene>
         <!--New Category-->
         <scene sceneID="Nqz-zT-7Dw">
@@ -753,12 +786,11 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N3H-Os-3iu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3366" y="386"/>
+            <point key="canvasLocation" x="4304.8000000000002" y="385.45727136431788"/>
         </scene>
     </scenes>
     <resources>
         <image name="AndresMartinez" width="600" height="600"/>
-        <image name="girl-leaves" width="720" height="912.719970703125"/>
         <image name="icons8-button-100" width="100" height="100"/>
         <image name="icons8-camera-70" width="70" height="70"/>
         <image name="icons8-contact-details-40" width="40" height="40"/>
@@ -768,7 +800,7 @@ Commissions, collaboration ideas, inquiries, or maybe you want to know what my f
         <image name="icons8-profile-40" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XeL-YY-5oh"/>
+        <segue reference="nZs-nZ-6Oh"/>
         <segue reference="HbE-hT-dGS"/>
     </inferredMetricsTieBreakers>
 </document>

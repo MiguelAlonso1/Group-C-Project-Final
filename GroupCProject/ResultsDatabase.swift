@@ -1,21 +1,22 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
-//********************************************
-// *********ADMIN PIN: 2077*******************
-//********************************************
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
 import CoreData
-//This class stores a CoreData array for Employees and fuctions to process data
 
+//This class stores a CoreData array for Results and fuctions to process data
 class ResultsDatabase: NSObject {
     
     public var resultsArray = [Results]()
-    
+    public var faveResultsArray = [Results]()
     
     //this removes dups
     public func removeFromCoreDataArray (title: String) -> Void {
@@ -33,12 +34,13 @@ class ResultsDatabase: NSObject {
         do {
             try context.execute(deleteRequest)
             try context.save()
-            print (title + " successfully deleted from KoreData")
+            print (title + " successfully deleted from CoreData")
         } catch {
-            print ("There was an error deleting the Results object from KoreData")
+            print ("There was an error deleting the Results object from CoreData")
         }
     }
     
+    // gets result from array and sets temp title
     public func getResult (title: String) -> Results? {
         for temp in self.resultsArray{
             if temp.title == title {
@@ -90,12 +92,67 @@ class ResultsDatabase: NSObject {
         
         do {
             self.resultsArray = try managedContext.fetch(request) as! [Results]//update results in memory array
-            print("Retreival from KoreData successfull")
+            print("Retreival from CoreData successfull")
         } catch let error as NSError {
             print("Could retreive. \(error), \(error.userInfo)")
         }
+        
+    }//end CoreDataRetreival func
     
-    }//end KoreDataRetreival func
+    
+    //insert fave to CoreData
+    func faveResultInsert(title:String,favorited: Bool)->Void{
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Results", in: managedContext)
+        let request = NSFetchRequest<NSFetchRequestResult>()
+        request.entity = entity
+        
+        let predicate = NSPredicate.init(format: "title == '\(title)'")
+        
+        request.predicate = predicate
+        
+        do{
+            var results = try managedContext.fetch(request)
+            
+            let objectUpdate = results[0] as! NSManagedObject
+            
+            objectUpdate.setValue(favorited, forKey: "favorited")
+            try managedContext.save()
+            print("added to favorites")
+        }catch let error as NSError {
+            print("error updating Favorites \(error)")
+        }
+        
+    }//end CoreDataInsert function
+    
+    //load records from CoreData to  local array
+    func faveResultsCoreDataRetreival()->Void{
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        print("SQLite location: \(String(describing: appDelegate.persistentContainer.persistentStoreCoordinator.persistentStores.first?.url))")
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Results", in: managedContext)
+        let request = NSFetchRequest<NSFetchRequestResult>()
+        request.entity = entity
+        
+        // let predicate = NSPredicate(format: "favorited==%@", true)
+        let predicate = NSPredicate(format: "favorited == %d", true)
+        request.predicate = predicate
+        
+        do {
+            self.faveResultsArray = try managedContext.fetch(request) as! [Results]//update results in memory array
+            print("Fave Retreival from CoreData successfull")
+            print(self.faveResultsArray)
+        } catch let error as NSError {
+            print("Could retreive. \(error), \(error.userInfo)")
+        }
+        
+    }//end CoreDataRetreival func
     
     //load dummy records for testing app
     func insertDummyResult(img:UIImage, desc:String, title:String, categoryType:String)-> Void{
@@ -107,17 +164,17 @@ class ResultsDatabase: NSObject {
         
         do {
             tempArray = try managedContext.fetch(fetchRequest)//update emp array
-            print("Retreival from KoreData successfull")
+            //print("Retreival from CoreData successfull")
         } catch let error as NSError {
             print("Could retreive. \(error), \(error.userInfo)")
         }
         for item in tempArray{
-            if item.title == title{//if this dummy data is already in KoreData, don't insert it again
+            if item.title == title{//if this dummy data is already in CoreData, don't insert it again
                 return
             }
         }//end for
         
-        //not in KoreData, insert it
+        //not in CoreData, insert it
         let temRes = NSEntityDescription.insertNewObject(forEntityName: "Results", into: managedContext)
         
         let imgData = UIImagePNGRepresentation(img)

@@ -11,12 +11,13 @@
 
 import UIKit
 
-//class for results table view cell
-class ResultsTableViewCell: UITableViewCell {
-    
-    // outlets to display current result
-    @IBOutlet weak var resultPicture: UIImageView!
-    @IBOutlet weak var resultTitle: UILabel!
+//class for fave results table view cell
+class FaveResultsTableViewCell: UITableViewCell {
+
+    //outlets to display fave results
+@IBOutlet weak var faveResultPicture: UIImageView!
+@IBOutlet weak var faveResultTitle: UILabel!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,3 +31,4 @@ class ResultsTableViewCell: UITableViewCell {
     }
     
 }
+

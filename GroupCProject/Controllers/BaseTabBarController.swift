@@ -1,23 +1,24 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
-//********************************************
-// *********ADMIN PIN: 2077*******************
-//********************************************
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
+
 
 import UIKit
 
-//This controller stores references to the original arrays that use CoreData for the Employees list and the Time Log so that the other controllers can read them, write them and update them
-
+//This controller stores references to the original arrays that use CoreData so that the other controllers can read them, write them and update them
 class BaseTabBarController: UITabBarController {
-//reference to data class that handles the CoreData for the employees
-   
+    //reference to data class that handles the CoreData for the items
     var categoriesDB = CategoriesDatabase()
     var resultsDB = ResultsDatabase()
     
+    //set categories to appear when app is opened
     override func viewDidLoad() {
         super.viewDidLoad()
         self.categoriesDB.insertDummyCategory(img:#imageLiteral(resourceName: "blue-bjork"), categoryType: "Oil Paintings")

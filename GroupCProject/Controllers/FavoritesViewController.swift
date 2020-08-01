@@ -1,239 +1,124 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
-//********************************************
-// *********ADMIN PIN: 2077*******************
-//********************************************
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
+import CoreData
 
-//this class controls the PINs entered by users. It determines if a PIN is correct or not
-//and display the proper messages to user based on that
-//it control access to log and employee edit tabBars
-class FavoritesViewController: UIViewController {
-//   
-//    //set up local variables
-//    @IBOutlet weak var clockLabel: UILabel!
-//    @IBOutlet var PinNumberLabels: [UILabel]!
-//    @IBOutlet var KeypadButtons: [UIButton]!
-//    
-//    @IBOutlet weak var InLabel: UILabel!
-//    @IBOutlet weak var outLabel: UILabel!
-//    var pinString = ""
-//    var isAdminModeEnable = false
-//    var PINCounter = 1
-//    
-//    //this variable holds reference to CoreData arrays for both, Employees and Time logs
-//    var tabBarCopy = BaseTabBarController()
-//    
-//    //timer for clock on PIN screen
-//    var timer = Timer()
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        //default colors for IN or OUT labels
-//        self.InLabel.backgroundColor = UIColor.white
-//        self.outLabel.backgroundColor = UIColor.white
-//        
-//        self.InLabel.textColor = UIColor.lightGray
-//        self.outLabel.textColor = UIColor.lightGray
-//        
-//        //update local variable to reference to CoreData arrays
-//        let tabBar = tabBarController as! BaseTabBarController
-//        self.tabBarCopy = tabBar
-//        
-//        //make pin fields blank
-//        for i in 0...self.PinNumberLabels.count - 1 {
-//            self.PinNumberLabels[i].text = ""
-//            }
-//        //set clock
-//        timer = Timer.scheduledTimer(timeInterval: 1.0,
-//            target: self,
-//            selector: #selector(tick),
-//            userInfo: nil,
-//            repeats: true)
-//        
-//        //insert dummy data to test the app and CoreData
-//         self.tabBarCopy.employeeList.insertDummyEmps(empID: 1234, firstName: "Miguel", lastName: "Alonso")
-//         self.tabBarCopy.employeeList.insertDummyEmps(empID: 4321, firstName: "Felipe", lastName: "Beltran")
-//         self.tabBarCopy.employeeList.insertDummyEmps(empID: 1001, firstName: "Claire", lastName: "Redfield")
-//         self.tabBarCopy.employeeList.insertDummyEmps(empID: 2077, firstName: "Super", lastName: "Admin")
-//    }
-//    
-//    //start clock so it ticks every second
-//    @objc func tick() {
-//        self.clockLabel.text = DateFormatter.localizedString(from: Date(), dateStyle: .none, timeStyle: .medium)
-//    }
-//    
-//    //this function handles the logic for the keypad the user uses to enter the PINs
-//    @IBAction func buttonPressed(_ sender: AnyObject) {
-//      var pinNum = 0
-//       var isPinCorrect = false
-//      var alertController = UIAlertController()
-//        
-//        //set screen pin digit
-//      self.PinNumberLabels[self.PINCounter - 1].text = sender.titleLabel!.text
-//       //concatenate current digit to string that will get parsed to an Integer later
-//        pinString += sender.titleLabel!.text!
-//        
-//      self.PINCounter += 1
-//        
-//      if self.PINCounter > 4
-//      {
-//        pinNum = Int (pinString)!
-//    
-//        //check if pin is correct
-//        isPinCorrect = self.tabBarCopy.employeeList.isPINCorrect(PIN: pinNum)
-//
-//        if isPinCorrect == false {
-//            alertController = UIAlertController(title: "ID number is incorrect", message:
-//            "Please try again", preferredStyle: .alert)
-//        }
-//        else{
-//            //update PIN Number on the main tab bar controller so every view can see it
-//            let tempEmp = self.tabBarCopy.employeeList.getEmployee(PIN: pinNum)
-//            
-//            /***********procesess ADMIN mode; it re-enables tabbar so log and edit tabs are visible
-//            ****************************************************************************************/
-//            if tempEmp?.firstName == "Super" && tempEmp?.lastName == "Admin"{
-//                if self.isAdminModeEnable == false{
-//                    self.tabBarCopy.enableTabBar()
-//                    self.isAdminModeEnable = true
-//                    
-//                    alertController = UIAlertController(title: "Admin Mode Enabled", message:
-//                        "Tab Bar is now visible \n***To disable, enter ADMIN PIN again***", preferredStyle: .alert)
-//                }
-//                else{//disable admin mode
-//                    self.tabBarCopy.disableTabBar()
-//                    self.isAdminModeEnable = false
-//                    
-//                    alertController = UIAlertController(title: "Admin Mode Disabled", message:
-//                        "***To enable, enter ADMIN PIN again***", preferredStyle: .alert)
-//                }
-//              //show alert message
-//                self.present(alertController, animated: true, completion: nil)
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-//                    alertController.dismiss(animated: false, completion: nil)
-//                })
-//                
-//                //this second dispatcher is needed to show the 4th PIN entered;otherwise,it processes so fast is not visible
-//                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-//                    alertController.dismiss(animated: false, completion: nil)
-//                    
-//                    //reset pin pad for next user
-//                    for i in 0...self.PinNumberLabels.count - 1 {
-//                        
-//                        self.PinNumberLabels[i].text = ""
-//                    }
-//                    self.PINCounter = 1
-//                    self.pinString = ""
-//                }
-//               return
-//            }
-//            let isClockingIn = self.isClockingIN(emp: tempEmp!)
-//            //employee is clocking in
-//            if isClockingIn == -35{//employee is clocking in
-//                
-//                self.InLabel.backgroundColor = UIColor.orange
-//                self.InLabel.textColor = UIColor.black
-//                self.tabBarCopy.log.coreDataLogInsert(firstName: tempEmp!.firstName!, lastName: tempEmp!.lastName!, timeIn:Date() , timeOut: nil)
-//          
-//            
-//            alertController = UIAlertController(title: "PIN is correct!", message:
-//                "Welcome \(tempEmp!.firstName ?? "Unknown")! You're clocking in", preferredStyle: .alert)
-//               
-//            }//end if clocking if = true
-//            else{//employee is clocking out
-//                
-//                //ilimunate IN label
-//                self.outLabel.backgroundColor = UIColor.orange
-//                self.outLabel.textColor = UIColor.black
-//                
-//                //update time out entry for employee in CoreData
-//                self.tabBarCopy.log.updateLogTimeOut(firstName: tempEmp!.firstName!, lastName: tempEmp!.lastName!)
-//            
-//                alertController = UIAlertController(title: "PIN is correct!", message:
-//                    "Goodbye  \(tempEmp!.firstName ?? "Unknown")! You're clocking out", preferredStyle: .alert)
-//            }
-//        }
-//        self.present(alertController, animated: true, completion: nil)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-//            alertController.dismiss(animated: false, completion: nil)
-//             })
-//      
-//        //this second dispatcher is needed to show the 4th PIN entered;otherwise,it processes so fast is not visible
-//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-//            alertController.dismiss(animated: false, completion: nil)
-//
-//           //reset pad for next user
-//            for i in 0...self.PinNumberLabels.count - 1 {
-//
-//            self.PinNumberLabels[i].text = ""
-//        }
-//        self.PINCounter = 1
-//        self.pinString = ""
-//            
-//            //reset IN or OUT labels
-//                    self.InLabel.backgroundColor = UIColor.white
-//                    self.outLabel.backgroundColor = UIColor.white
-//            
-//                    self.InLabel.textColor = UIColor.lightGray
-//                    self.outLabel.textColor = UIColor.lightGray
-//     }
-//
-//      }//end if PIN > 4
-//      
-//      
-//    }//end buttonpressed
-//    
-//    //handles logic for clocking in
-//    func isClockingIN(emp: Employee)-> Int{
-//        //update array from CoreData
-//        self.tabBarCopy.log.logCoreDataRetreival()
-//        for temp in 0 ..< self.tabBarCopy.log.logList.count{
-//            if self.tabBarCopy.log.logList[temp].firstName == emp.firstName &&
-//                self.tabBarCopy.log.logList[temp].lastName == emp.lastName &&
-//                self.tabBarCopy.log.logList[temp].timeOut == nil{
-//                return temp//employee is clocking out
-//            }
-//        }//end for loop
-//        //employee is clocking in
-//      return -35
-//    }
-//    //the funcions below handle delegation to hide key board when the user changes
-//    //fields or touches the screen outside of them
-//    func applicationWillEnterForeground(notification:NSNotification) {
-//        let defaults = UserDefaults.standard
-//        defaults.synchronize()
-//       
-//    }
-//
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
-//
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        
-//        //load local array from CoreData
-//        self.tabBarCopy.employeeList.empCoreDataRetreival()
-//        
-//        let app = UIApplication.shared
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground(notification:)), name: Notification.Name.UIApplicationWillEnterForeground, object: app)
-//        
-//    }
-//    
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        
-//        //self.PINCounter = 1
-//        NotificationCenter.default.removeObserver(self)
-//    }
+// Displays table view of favorite artwork
+class FavoritesViewController: UITableViewController, UINavigationControllerDelegate,UISearchDisplayDelegate, UISearchBarDelegate
+{
+    
+    @IBOutlet var tblview: UITableView!
+    
+    //initialize search bar
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    // create array for filtered results
+    var filteredResults : [Results]!
+    
+    //This variable will hold a reference to the original CoreData array for logs in the database
+    var tabBarCopy = BaseTabBarController()
+    var categoryType = String()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+       //Retrieve fave results array self.tabBarCopy.resultsDB.faveResultsCoreDataRetreival()
+        
+        //Search bar connected to delegate
+        searchBar.delegate = self
+        filteredResults = self.tabBarCopy.resultsDB.faveResultsArray
+
+        //the local class variable is initialized with a copy of the original CoreData array for log entries
+        let tabBar = tabBarController as! BaseTabBarController
+        self.tabBarCopy = tabBar
+        
+        //set some Table view parameters to improve reading
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 300
+        
+    }
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //this will run a fetch to get all data from CoreData; category parameters filters out the other categories
+        self.tabBarCopy.resultsDB.faveResultsCoreDataRetreival()
+
+        tableView.reloadData()
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //gets length from local class variable
+        
+        return filteredResults.count;
+    }
+    
+    //loads array contact info into the cells
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // Create an instance of UITableViewCell, with default appearance
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FaveResultsTableViewCell",for: indexPath) as! FaveResultsTableViewCell
+        
+        // set picture and title in cell
+        cell.faveResultPicture.image = UIImage(data:filteredResults[indexPath.row].img! as Data)
+        cell.faveResultTitle.text = filteredResults[indexPath.row].title
+        
+        return cell
+    }
+    
+    //this branches off to either the Employee Edit View Controller
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // Figure out which row was just tapped
+        if let row = tableView.indexPathForSelectedRow?.row {
+            // Get the item associated with this row and pass it along
+            let item = self.tabBarCopy.resultsDB.faveResultsArray[row]
+            //branch to the Detail View
+            let artDetailViewController = segue.destination as! ArtDetailViewController
+            //Pass reference to selected contact
+            artDetailViewController.localGallery = item//pass gallery object
+        }
+        else{
+            let addRes = segue.destination as! NewResultViewController
+            addRes.preSelectedCat = self.categoryType
+        }
+    }//end prepare
+    
+    //MARK: Search Bar Config
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+
+        filteredResults = []
+
+        if searchText == "" {
+            //while no text in search bar, display all items
+            filteredResults = self.tabBarCopy.resultsDB.faveResultsArray
+        } else {
+             //filter items to display results associated with search text
+            for item in self.tabBarCopy.resultsDB.faveResultsArray{
+                if item.title!.lowercased().contains(searchText.lowercased()){
+                    filteredResults.append(item)
+                }
+            }
+        }
+        // reload data
+        self.tableView.reloadData()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
 }
 

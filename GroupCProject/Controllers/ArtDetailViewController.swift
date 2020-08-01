@@ -1,21 +1,27 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
 
 //this view shows the pin and url fields that the user can use to update the original values
 class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate{
    
-    var localGallery : Results?//table from KoreData
+    var localGallery : Results?//table from CoreData
     var tabBarCopy = BaseTabBarController()
     var tableViewController = CategoryResultsTableViewController()
     var picFlag = false
+    var favorite = false
     var preSelectedCat = String()
-    
+
+    // set outlets for artwork picture, description and title
     @IBOutlet weak var artPicture: UIImageView!
     @IBOutlet weak var artDescription: UITextView!
     @IBOutlet weak var artTitle: UILabel!
@@ -28,6 +34,7 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
     @IBOutlet weak var updateDesc: UITextView!
     @IBOutlet weak var updateTitleLabel: UILabel!
     
+    // set buttons to favorite, delete and update
     @IBOutlet weak var favButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var updateButton: UIButton!
@@ -37,6 +44,7 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
         let tabBar = tabBarController as! BaseTabBarController
         self.tabBarCopy = tabBar
         
+        //update fields to true
         self.updatePIc.isHidden = true
         self.updateTiitle.isHidden = true
         self.camera.isHidden = true
@@ -44,27 +52,29 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
         self.updateDesc.isHidden = true
         self.updateTitleLabel.isHidden = true
         
+        // set values for image, description and title
         artPicture.image = UIImage( data: localGallery!.img! as Data)
         artDescription.text = localGallery!.desc
         artTitle.text = localGallery!.title
     }
     
-    //this function limits the number of characters in the PIN field to 4
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    //this function deletes the item from teh array
     @IBAction func deleteButtonPressed(_ sender: Any) {
         
         var alertController = UIAlertController()
         
-            //Used the reference to the class with original contacts array and store new contact
+        //Used the reference to the class with array and remove
         self.tabBarCopy.resultsDB.removeFromCoreDataArray(title: self.localGallery!.title!)
             
+        //alert user it has been deleted
         alertController = UIAlertController(title: "Artpiece has been deleted!", message:"Redirecting back to Categories..." , preferredStyle: .alert)
-        
-       self.present(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
         
         // delays execution of code to dismiss
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
@@ -73,38 +83,36 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
         })
     }
     
-    //This function will save the values entered (if any) in the text fields into the selected
-    //object. These fields are required so an error message will be shown to the user if any of those
-    //fields are missing
+    
+   // Favorite Button Pressed, adds item to Favorites Array
     @IBAction func makeFavoriteButtonPressed(_ sender: Any) {
-//
-//        var alertController = UIAlertController()
-//
-//        //checks for blank fields
-//        if self.firstField.text == "" || self.lastField.text == "" || self.pinField.text == ""
-//        {
-//            alertController = UIAlertController(title: "Try Again", message: "PIN, First Name, and Last Name cannot be blank", preferredStyle: .alert)
-//        }
-//        else//fields have data, process them and udpate CoreData array
-//        {
-//            self.tabBarCopy.employeeList.removeFromCoreDataArray(PIN: self.PIN)
-//            //Used the reference to the class with original contacts array and store new contact
-//            self.tabBarCopy.employeeList.coreDataEmpInsert(empID: Int(self.pinField.text!)!, firstName: self.firstField.text!, lastName: self.lastField.text!)
-//
-//            alertController = UIAlertController(title: "It's Done!", message: "Changes Saved!", preferredStyle: .alert)
-//        }
-//        self.present(alertController, animated: true, completion: nil)
-//
-//        // delays execution of code to dismiss
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-//            alertController.dismiss(animated: false, completion: nil)
-//        })
-//
-//        //dismiss keyboard if it's showing when the botton was pressed
-//        view.endEditing(true)
-  }
+        
+        //alerts user item was favorited
+        let falert = UIAlertController(title: "Favorite!", message:"You favorited this item." , preferredStyle: .alert)
+        
+         //Create OK button with action handler
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            
+           // inserts new favorite to array
+            self.tabBarCopy.resultsDB.faveResultInsert(title: self.artTitle.text!,favorited: true)//"true")
+            print(self.artTitle.text!)
+        })
+        
+        //Create cancel button
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+            print("Cancel button pressed")
+        }
+        
+        //Add OK & Cancel to dialog message
+        falert.addAction(ok)
+        falert.addAction(cancel)
+            
+        self.present(falert, animated: true, completion: nil)
+
+    }
+  
     
-    
+    //update result
     @IBAction func updateResultButton(_ sender: Any) {
         
         self.artDescription.isHidden = true
@@ -122,6 +130,7 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
         self.updateTitleLabel.isHidden = false
     }
     
+    //button for camera has been pressed
     @IBAction func pressedCamera(_ sender: Any) {
         self.picFlag = true
         let imagePicker = UIImagePickerController()
@@ -141,7 +150,7 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
         present(imagePicker, animated: true, completion: nil)
     }
     
-
+    //submit button has been pressed
     @IBAction func pressedSubmit(_ sender: Any) {
         
         var alertController = UIAlertController()
@@ -157,9 +166,6 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
             
             alertController = UIAlertController(title: "It's Done!", message:"Artpiece has been updated!" , preferredStyle: .alert)
             self.picFlag = false// restore flag
-            
-            
-            
             
             //update fields and pic
             self.artDescription.text = self.updateDesc.text
@@ -209,16 +215,16 @@ class ArtDetailViewController:UIViewController,UITextFieldDelegate, UINavigation
     } // end imagePickerController (_:didFinish)
     
     
-//This function hides the keyboard when done or the return key are pressed
+    //This function hides the keyboard when done or the return key are pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-//
+
     //This will hide the keyboard when the user clicks away on any part in the view on the app
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //dismiss keyboard when the user touches outside of the fields
         view.endEditing(true)
-} //NewContactViewController Class. This is the end of this file
+    }
 
-}
+}//NewContactViewController Class. This is the end of this file

@@ -1,16 +1,18 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
-
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
 import CoreData
 
-//This class stores a CoreData array for TimeLog entries and fuctions to process data
-
+//This class stores a CoreData array for categories
 class CategoriesDatabase: NSObject {
     
     public var categoriesArray  = [Categories]()
@@ -48,7 +50,7 @@ class CategoriesDatabase: NSObject {
         
         do {
             self.categoriesArray = try managedContext.fetch(fetchRequest)//update emp array
-            print("Retreival from KoreData successfull")
+           // print("Retreival from CoreData successfull")
         } catch let error as NSError {
             print("Could retreive. \(error), \(error.userInfo)")
         }
@@ -65,17 +67,17 @@ class CategoriesDatabase: NSObject {
         
         do {
             tempArray = try managedContext.fetch(fetchRequest)//update emp array
-            print("Retreival from KoreData successfull")
+           // print("Retreival from CoreData successfull")
         } catch let error as NSError {
             print("Could retreive. \(error), \(error.userInfo)")
         }
         for item in tempArray{
-            if item.categoryType == categoryType {//if this dummy data is already in KoreData, don't insert it again
+            if item.categoryType == categoryType {//if this dummy data is already in CoreData, don't insert it again
                 return
             }
         }//end for
         
-        //not in KoreData, insert it
+        //not in CoreData, insert it
         let temCat = NSEntityDescription.insertNewObject(forEntityName: "Categories", into: managedContext)
         
         let imgData = UIImagePNGRepresentation(img)

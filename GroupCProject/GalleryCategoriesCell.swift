@@ -1,24 +1,25 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID: 3963603
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment 6
-//  DUE: Sunday 07/26/2020
-//********************************************
-// *********ADMIN PIN: 2077*******************
-//********************************************
-
-//this cell is for the employees list on the edit tab
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
 
+// This class creates the Gallery Categories Cell for the Table View
 class GalleryCategoriesCell: UITableViewCell {
 
+    // set outlets for gallery 
     @IBOutlet weak var GalleryType: UILabel!
     @IBOutlet weak var GalleryTypePic: UIImageView!
     
     override func awakeFromNib() {
-        super.awakeFromNib()        // Initialization code
+        super.awakeFromNib()
     }
 
    override func setSelected(_ selected: Bool, animated: Bool) {

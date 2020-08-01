@@ -1,14 +1,18 @@
 //  PROGRAMMER: Miguel Alonso
 //  PANTHERID: 2693267
+//  PROGRAMMER: Diane Abdullah
+//  PANTHERID: 4892489
+//  PROGRAMMER: Kenny Gonzalez Mejia
+//  PANTHER ID:
 //  CLASS: COP 465501 online Summer C
 //  INSTRUCTOR: Steve Luis CASE 282
-//  ASSIGNMENT: Programming Assignment #4
-//  DUE: Sunday 07/05/2020
-
+//  ASSIGNMENT: Deliverable 2
+//  DUE: Saturday 08/01/2020
 
 import UIKit
 import MessageUI
 
+// This view controller displays the commission section
 class CommissionViewController: UIViewController,UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MFMessageComposeViewControllerDelegate {
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
@@ -17,12 +21,14 @@ class CommissionViewController: UIViewController,UITextFieldDelegate, UINavigati
     //It's passed down by the segue. It'll be used to add new contacts
    // var store:ItemStore?
     
-    
+    // set outlets for image and text fields
     @IBOutlet var myPicture: UIImageView!
     @IBOutlet weak var fullNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var txtField: UITextView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +36,24 @@ class CommissionViewController: UIViewController,UITextFieldDelegate, UINavigati
         fullNameField.delegate = self
         phoneField.delegate = self
         emailField.delegate = self
+    }
+    
+    func showComposeMail() {
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            return
+        }
+        
+        let composer = MFMailComposeViewController()
+        composer.mailComposeDelegate = self
+        composer.setToRecipients([emailField.text!])
+        composer.setSubject(fullNameField.text! + " commission request")
+        composer.setMessageBody(txtField.text! + "\n\n" + phoneField.text!, isHTML: false)
+        
+        
+        present(composer, animated: true)
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,6 +68,7 @@ class CommissionViewController: UIViewController,UITextFieldDelegate, UINavigati
         
         let imagePicker = UIImagePickerController()
         
+        //checks if camera is available. If not, displays library
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePicker.sourceType = .camera
             imagePicker.allowsEditing = true
@@ -78,6 +103,7 @@ class CommissionViewController: UIViewController,UITextFieldDelegate, UINavigati
         }
         else
         {
+            /*
             let composeVC = MFMessageComposeViewController()
             composeVC.messageComposeDelegate = self
             
@@ -89,6 +115,8 @@ class CommissionViewController: UIViewController,UITextFieldDelegate, UINavigati
             if MFMessageComposeViewController.canSendText() {
                 self.present(composeVC, animated: true, completion: nil)
             }
+            */
+            showComposeMail()
             
             let alertController = UIAlertController(title: "It's Done!", message: "Inquiry has been sent!", preferredStyle: .alert)
             
@@ -129,5 +157,29 @@ class CommissionViewController: UIViewController,UITextFieldDelegate, UINavigati
         view.endEditing(true)
     }
     
-} //NewContactViewController Class. This is the end of this file
+} //CommissionViewController Class. This is the end of this file
 
+extension CommissionViewController: MFMailComposeViewControllerDelegate {
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        if let _ = error {
+            
+            controller.dismiss(animated: true)
+        }
+        
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+        case .failed:
+            print("Failed to send")
+        case .saved:
+            print("saved")
+        case .sent:
+            print("Email sent")
+        }
+        
+        controller.dismiss(animated: true)
+    }
+    
+}
